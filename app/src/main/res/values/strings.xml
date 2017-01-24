@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DontSpend</string>
+    <string-array name="investments_array">
+        <item>Short Term (3 Month T. Bill)</item>
+        <item>Long Term (10 Year T. Bond)</item>
+        <item>S&amp;P 500</item>
+    </string-array>
 </resources>
