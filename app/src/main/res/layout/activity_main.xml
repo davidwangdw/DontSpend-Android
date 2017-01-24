@@ -73,4 +73,14 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/calculateButton" />
 
+    <Button
+        android:text="Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/settingsButton"
+        style="@android:style/Widget.Material.Light.Button" />
+
 </RelativeLayout>
