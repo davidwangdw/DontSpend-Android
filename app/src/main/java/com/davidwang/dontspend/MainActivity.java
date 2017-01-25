@@ -1,5 +1,6 @@
 package com.davidwang.dontspend;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -10,21 +11,37 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
+import android.content.Intent;
 import android.widget.AdapterView.OnItemSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.util.Log;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import org.w3c.dom.Text;
 
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     //placeholder for testing
     Button mButton;
     EditText mEdit;
-    TextView tText;
+    TextView fiveYearCalculationText;
+    TextView tenYearCalculationText;
+    TextView twentyYearCalculationText;
+    TextView thirtyYearCalculationText;
+
+    Button settingsButton;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    //private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +66,32 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // attaching data adapter to spinner
         spinner.setAdapter(adapter);
 
-        mButton = (Button)findViewById(R.id.calculateButton);
-        mEdit   = (EditText)findViewById(R.id.dollarInputField);
-        tText = (TextView) findViewById(R.id.fiveYearCalculationResult);
-        tText.setText("");
+        mButton = (Button) findViewById(R.id.calculateButton);
+        mEdit = (EditText) findViewById(R.id.dollarInputField);
+        fiveYearCalculationText = (TextView) findViewById(R.id.fiveYearCalculationResult);
+        tenYearCalculationText = (TextView) findViewById(R.id.tenYearCalculationResult);
+        twentyYearCalculationText = (TextView) findViewById(R.id.twentyYearCalculationResult);
+        thirtyYearCalculationText = (TextView) findViewById(R.id.thirtyYearCalculationResult);
+        fiveYearCalculationText.setText("");
 
-        //t.setText("Step One: blast egg");
 
         mButton.setOnClickListener(
-                new View.OnClickListener()
-                {
-                    public void onClick(View view)
-                    {
+                new View.OnClickListener() {
+                    public void onClick(View view) {
                         //Log.v("EditText", mEdit.getText().toString());
-                        tText.setText(mEdit.getText());
+                        fiveYearCalculationText.setText(mEdit.getText());
                     }
                 });
+
+
+
+    }
+
+    public void openSettings(View view)
+    {
+        Intent intent = new Intent(this, SettingsScreenActivity.class);
+        startActivity(intent);
+        //System.out.println("Hello");
     }
 
     @Override
@@ -77,9 +104,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Showing selected spinner item
         //Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+
 
 
 }

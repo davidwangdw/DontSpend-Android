@@ -81,6 +81,36 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/settingsButton"
+        android:onClick="openSettings"
         style="@android:style/Widget.Material.Light.Button" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fiveYearCalculationResult"
+        android:layout_alignLeft="@+id/fiveYearCalculationResult"
+        android:layout_alignStart="@+id/fiveYearCalculationResult"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tenYearCalculationResult" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tenYearCalculationResult"
+        android:layout_alignLeft="@+id/tenYearCalculationResult"
+        android:layout_alignStart="@+id/tenYearCalculationResult"
+        android:layout_marginTop="16dp"
+        android:id="@+id/twentyYearCalculationResult" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/twentyYearCalculationResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:id="@+id/thirtyYearCalculationResult" />
 
 </RelativeLayout>
