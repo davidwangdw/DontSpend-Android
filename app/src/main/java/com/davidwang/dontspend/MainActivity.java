@@ -3,6 +3,7 @@ package com.davidwang.dontspend;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -13,10 +14,12 @@ import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
 import android.widget.AdapterView.OnItemSelectedListener;
+import com.davidwang.dontspend.R;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.util.Log;
+import java.text.NumberFormat;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -37,16 +40,28 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     TextView thirtyYearCalculationText;
 
     Button settingsButton;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    //private GoogleApiClient client;
+
+    // numbers
+
+    // these are the geometric returns calculated from the bottom website for the years 1928 - 2015
+    // http://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html
+    // inflation rates are gathered from this website for the years 1914 - 2016
+    // http://www.tradingeconomics.com/united-states/inflation-cpi
+
+    Double inflation = 0.0329;
+    Double returnForSP500 = 0.0950;
+    Double returnForShortTerm = 0.0345;
+    Double returnForLongTerm = 0.0496;
+
+    //for real or nominal values
+    Integer dollarValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initToolbar();
 
         // spinner element
         Spinner spinner = (Spinner) findViewById(R.id.spinner1);
@@ -68,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
         mButton = (Button) findViewById(R.id.calculateButton);
         mEdit = (EditText) findViewById(R.id.dollarInputField);
+
         fiveYearCalculationText = (TextView) findViewById(R.id.fiveYearCalculationResult);
         tenYearCalculationText = (TextView) findViewById(R.id.tenYearCalculationResult);
         twentyYearCalculationText = (TextView) findViewById(R.id.twentyYearCalculationResult);
@@ -78,8 +94,18 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         mButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
+                        // get values from all the fields
+
+                        Double amount = Double.parseDouble(mEdit.getText().toString());
+
+                        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+
                         //Log.v("EditText", mEdit.getText().toString());
-                        fiveYearCalculationText.setText(mEdit.getText());
+
+                        Double fiveYearReturn = returnsIfInvested(amount, returnForShortTerm, 5.0, 0);
+                        String fiveYearReturnString = formatter.format(fiveYearReturn);
+
+                        fiveYearCalculationText.setText(fiveYearReturn.toString());
                     }
                 });
 
@@ -92,6 +118,28 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         Intent intent = new Intent(this, SettingsScreenActivity.class);
         startActivity(intent);
         //System.out.println("Hello");
+    }
+
+    // calculations
+    public double returnsIfInvested(Double amount, Double rate, Double years, Integer dollar)
+    {
+        if (dollar == 0)
+        {
+            return amount*Math.pow(1 + rate - inflation,years);
+        }
+        else
+        {
+            return amount*Math.pow(1 + rate,years);
+         }
+
+    }
+
+    private void initToolbar() {
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //mToolbar.setTitleTextColor(Color.WHITE);
+        myToolbar.setTitle("Don't Spend!");
+        myToolbar.showOverflowMenu();
+        setSupportActionBar(myToolbar);
     }
 
     @Override
@@ -109,7 +157,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         // TODO Auto-generated method stub
     }
 
-
-
-
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
 }
