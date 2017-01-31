@@ -38,6 +38,8 @@
         android:layout_marginTop="23dp"
         android:id="@+id/dollarInputField"
         android:layout_below="@+id/textView4"
+        android:gravity="center"
+        android:hint="Enter Amount"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -54,9 +56,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/spinner1"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
-        android:id="@+id/fiveYearCalculationResult" />
+        android:gravity="center"
+        android:id="@+id/fiveYearCalculationResult"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Calculate"
@@ -74,7 +78,9 @@
         android:layout_alignLeft="@+id/fiveYearCalculationResult"
         android:layout_alignStart="@+id/fiveYearCalculationResult"
         android:layout_marginTop="16dp"
-        android:id="@+id/tenYearCalculationResult" />
+        android:gravity="center"
+        android:id="@+id/tenYearCalculationResult"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="TextView"
@@ -84,16 +90,20 @@
         android:layout_alignLeft="@+id/tenYearCalculationResult"
         android:layout_alignStart="@+id/tenYearCalculationResult"
         android:layout_marginTop="16dp"
-        android:id="@+id/twentyYearCalculationResult" />
+        android:gravity="center"
+        android:id="@+id/twentyYearCalculationResult"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/twentyYearCalculationResult"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:id="@+id/thirtyYearCalculationResult" />
+        android:gravity="center"
+        android:id="@+id/thirtyYearCalculationResult"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <Spinner
         android:layout_width="match_parent"

@@ -5,4 +5,9 @@
         <item>Long Term (10 Year T. Bond)</item>
         <item>S&amp;P 500</item>
     </string-array>
+
+    <string-array name="frequency_array">
+        <item>Once</item>
+        <item>Monthly</item>
+    </string-array>
 </resources>

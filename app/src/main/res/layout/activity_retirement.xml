@@ -17,11 +17,152 @@
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <TextView
-        android:text="Coming Soon!"
+        android:text="Current Net Worth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
         android:id="@+id/textView12"
-        android:layout_alignParentTop="true"
+        android:layout_alignBaseline="@+id/editText"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toStartOf="@+id/editText3" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="4"
+        android:id="@+id/targetRetirementText"
+        android:layout_below="@+id/amountSavedPerYearText"
+        android:layout_alignStart="@+id/amountSavedPerYearText"
+        android:gravity="center"/>
+
+    <TextView
+        android:text="Amount Saved / Year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView13"
+        android:layout_below="@+id/textView13"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView14" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="4"
+        android:id="@+id/currentNetWorthText"
+        android:layout_marginStart="31dp"
+        android:layout_alignBaseline="@+id/textView13"
+        android:layout_alignBottom="@+id/textView13"
+        android:layout_toEndOf="@+id/textView13"
+        android:gravity="center"/>
+
+    <TextView
+        android:text="Current Net Worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:id="@+id/textView13"
+        android:layout_marginStart="61dp"
+        android:layout_below="@+id/my_toolbar"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Target Retirement Worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:layout_alignBaseline="@+id/targetRetirementText"
+        android:layout_alignBottom="@+id/targetRetirementText"
+        android:layout_toStartOf="@+id/targetRetirementText" />
+
+    <TextView
+        android:text="Years Until Retirement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/targetRetirementText"
+        android:layout_alignStart="@+id/textView14"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView16" />
+
+    <TextView
+        android:text="5 Years"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView16"
+        android:layout_alignEnd="@+id/targetRetirementText"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/textView17" />
+
+    <TextView
+        android:text="How much are you spending?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView18" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_below="@+id/textView18"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/spendText"
+        android:gravity = "center"/>
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button" />
+
+    <Button
+        android:text="Calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spendText"
+        android:layout_alignStart="@+id/button"
+        android:layout_marginTop="54dp"
+        android:id="@+id/calculateButton" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calculateButton"
+        android:layout_alignStart="@+id/spendText"
+        android:layout_marginTop="14dp"
+        android:id="@+id/summaryText"
+        android:layout_alignEnd="@+id/spendText"
+        android:gravity = "center" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner1"
+        android:entries="@array/investments_array"
+        android:layout_below="@+id/spendText"
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner1"
+        android:id="@+id/spinner2"
+        android:entries="@array/frequency_array"
+        android:layout_alignStart="@+id/textView18"
+        android:layout_alignEnd="@+id/textView18" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="4"
+        android:id="@+id/amountSavedPerYearText"
+        android:gravity="center"
+        android:layout_below="@+id/currentNetWorthText"
+        android:layout_alignStart="@+id/currentNetWorthText" />
+
 </RelativeLayout>
