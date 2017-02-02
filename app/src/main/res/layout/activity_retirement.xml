@@ -4,6 +4,7 @@
     android:id="@+id/activity_retirement"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkGrey"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.davidwang.dontspend.retirementActivity">
 
@@ -11,19 +12,10 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         android:elevation="4dp"
+        android:background="@color/darkGrey"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
-    <TextView
-        android:text="Current Net Worth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView12"
-        android:layout_alignBaseline="@+id/editText"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toStartOf="@+id/editText3" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,6 +34,7 @@
         android:layout_alignStart="@+id/textView13"
         android:layout_below="@+id/textView13"
         android:layout_marginTop="26dp"
+        android:textColor="@color/lightGrey"
         android:id="@+id/textView14" />
 
     <EditText
@@ -57,41 +50,14 @@
         android:gravity="center"/>
 
     <TextView
-        android:text="Current Net Worth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:id="@+id/textView13"
-        android:layout_marginStart="61dp"
-        android:layout_below="@+id/my_toolbar"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="Target Retirement Worth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView15"
-        android:layout_alignBaseline="@+id/targetRetirementText"
-        android:layout_alignBottom="@+id/targetRetirementText"
-        android:layout_toStartOf="@+id/targetRetirementText" />
-
-    <TextView
-        android:text="Years Until Retirement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/targetRetirementText"
-        android:layout_alignStart="@+id/textView14"
-        android:layout_marginTop="15dp"
-        android:id="@+id/textView16" />
-
-    <TextView
         android:text="5 Years"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView16"
         android:layout_alignEnd="@+id/targetRetirementText"
         android:layout_marginEnd="10dp"
-        android:id="@+id/textView17" />
+        android:textColor="@color/lightGrey"
+        android:id="@+id/yearsUntilRetirement" />
 
     <TextView
         android:text="How much are you spending?"
@@ -99,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/lightGrey"
         android:id="@+id/textView18" />
 
     <EditText
@@ -125,26 +92,8 @@
         android:layout_below="@+id/spendText"
         android:layout_alignStart="@+id/button"
         android:layout_marginTop="54dp"
+        android:textColor="@color/lightRed"
         android:id="@+id/calculateButton" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/calculateButton"
-        android:layout_alignStart="@+id/spendText"
-        android:layout_marginTop="14dp"
-        android:id="@+id/summaryText"
-        android:layout_alignEnd="@+id/spendText"
-        android:gravity = "center" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner1"
-        android:entries="@array/investments_array"
-        android:layout_below="@+id/spendText"
-        android:layout_alignParentStart="true" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -164,5 +113,56 @@
         android:gravity="center"
         android:layout_below="@+id/currentNetWorthText"
         android:layout_alignStart="@+id/currentNetWorthText" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner1"
+        android:entries="@array/investments_array"
+        android:layout_below="@+id/spendText"
+        android:layout_alignEnd="@+id/targetRetirementText"
+        android:layout_alignStart="@+id/textView16" />
+
+    <TextView
+        android:text="Current Net Worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:id="@+id/textView13"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_alignEnd="@+id/button"
+        android:textColor="@color/lightGrey"
+        android:layout_marginEnd="50dp" />
+
+    <TextView
+        android:text="Target Retirement Worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:layout_alignBaseline="@+id/targetRetirementText"
+        android:layout_alignBottom="@+id/targetRetirementText"
+        android:textColor="@color/lightGrey"
+        android:layout_alignStart="@+id/textView14" />
+
+    <TextView
+        android:text="Years Until Retirement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/targetRetirementText"
+        android:textColor="@color/lightGrey"
+        android:layout_alignStart="@+id/textView15" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:id="@+id/summaryText"
+        android:gravity = "center"
+        android:layout_below="@+id/calculateButton"
+        android:textColor="@color/lightGrey"
+        android:layout_alignStart="@+id/spendText" />
 
 </RelativeLayout>

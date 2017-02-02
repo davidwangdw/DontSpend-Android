@@ -1,6 +1,7 @@
 package com.davidwang.dontspend;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //set color
+        View view = this.getWindow().getDecorView();
+        //view.setBackgroundColor(Color.rgb(93, 100, 118));
 
         initToolbar();
 

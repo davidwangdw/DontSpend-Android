@@ -8,6 +8,6 @@
 
     <string-array name="frequency_array">
         <item>Once</item>
-        <item>Monthly</item>
+        <item>Yearly</item>
     </string-array>
 </resources>
