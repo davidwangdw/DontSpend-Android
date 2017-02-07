@@ -1,7 +1,9 @@
 package com.davidwang.dontspend;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.audiofx.BassBoost;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +23,7 @@ import android.content.Intent;
 import android.widget.AdapterView.OnItemSelectedListener;
 import java.text.NumberFormat;
 
+import static android.R.id.list;
 
 
 public class MainActivity extends AppCompatActivity implements OnItemSelectedListener {
@@ -39,6 +43,11 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     // inflation rates are gathered from this website for the years 1914 - 2016
     // http://www.tradingeconomics.com/united-states/inflation-cpi
 
+    /*Double inflation = 0.0329;
+    Double returnForSP500 = 0.0950;
+    Double returnForShortTerm = 0.0345;
+    Double returnForLongTerm = 0.0496;*/
+
     Double inflation = 0.0329;
     Double returnForSP500 = 0.0950;
     Double returnForShortTerm = 0.0345;
@@ -46,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
 
     //for real or nominal values
     Integer dollarValue = 0;
+
+    //for once or monthly value
+    Integer onceOrMonth = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +71,44 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         initToolbar();
 
         // spinner element
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        spinner.setOnItemSelectedListener(this);
+
+        /*final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.investments_array, android.R.layout.simple_spinner_item);
+        //ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, R.layout.spinner_item, R.array.investments_array);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        //adapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(adapter);*/
+
+        //confusing, change later
+        final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        final Spinner spinner1 = (Spinner) findViewById(R.id.spinner);
+
+        // Initializing a String Array
+        String[] investments_array = new String[]{
+                "Short Term (3 Month T. Bill)",
+                "Long Term (10 Year T. Bond)",
+                "S&P 500"
+        };
+
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,investments_array
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+
+
+        String[] frequency = new String[] {
+                "Once",
+                "Monthly"
+        };
+
+        ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,frequency
+        );
+        spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_item);
+        spinner1.setAdapter(spinnerArrayAdapter2);
+
 
         // alert code
         final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
@@ -94,10 +139,38 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         thirtyYearCalculationText.setVisibility(TextView.INVISIBLE);
 
 
+        spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (spinner1.getSelectedItemPosition() == 0)
+                {
+                    onceOrMonth = 0;
+                    System.out.println("once");
+                }
+                else
+                {
+                    onceOrMonth = 1;
+                    System.out.println("monthly");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
+
+
         mButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View view) {
                         // get values from all the fields
+
+                        InputMethodManager inputManager = (InputMethodManager)
+                                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                        inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                         if (isEmpty(mEdit) || Double.parseDouble(mEdit.getText().toString()) > 100000.0)
                         {
@@ -106,36 +179,43 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
                         }
                         else {
                             //System.out.println(spinner.getSelectedItemPosition());
+                            System.out.println(SettingsScreenActivity.SP500Rate);
+                            inflation = SettingsScreenActivity.inflationRate;
+                            returnForSP500 = SettingsScreenActivity.SP500Rate;
+                            returnForShortTerm = SettingsScreenActivity.shortTermRate;
+                            returnForLongTerm = SettingsScreenActivity.longTermRate;
+                            dollarValue = SettingsScreenActivity.dollarValue;
                             // currency formatter
                             NumberFormat formatter = NumberFormat.getCurrencyInstance();
                             Double amount = Double.parseDouble(mEdit.getText().toString());
 
-                            if (spinner.getSelectedItemPosition() == 0)
-                            {
 
-                                fiveYearCalculationText.startAnimation(in);
-                                fiveYearCalculationText.setVisibility(TextView.VISIBLE);
-                                Double fiveYearReturn = returnsIfInvested(amount, returnForShortTerm, 5.0, 0);
-                                String fiveYearReturnString = formatter.format(fiveYearReturn);
-                                fiveYearCalculationText.setText(fiveYearReturnString + " in 5 years");
+                                if (spinner.getSelectedItemPosition() == 0) {
+                                    fiveYearCalculationText.startAnimation(in);
+                                    fiveYearCalculationText.setVisibility(TextView.VISIBLE);
+                                    Double fiveYearReturn = returnsIfInvested(amount, returnForShortTerm, 5.0, 0);
+                                    String fiveYearReturnString = formatter.format(fiveYearReturn);
+                                    fiveYearCalculationText.setText(fiveYearReturnString + " in 5 years");
 
-                                tenYearCalculationText.startAnimation(in);
-                                tenYearCalculationText.setVisibility(TextView.VISIBLE);
-                                Double tenYearReturn = returnsIfInvested(amount, returnForShortTerm, 10.0, 0);
-                                String tenYearReturnString = formatter.format(tenYearReturn);
-                                tenYearCalculationText.setText(tenYearReturnString + " in 10 years");
+                                    tenYearCalculationText.startAnimation(in);
+                                    tenYearCalculationText.setVisibility(TextView.VISIBLE);
+                                    Double tenYearReturn = returnsIfInvested(amount, returnForShortTerm, 10.0, 0);
+                                    String tenYearReturnString = formatter.format(tenYearReturn);
+                                    tenYearCalculationText.setText(tenYearReturnString + " in 10 years");
 
-                                twentyYearCalculationText.startAnimation(in);
-                                twentyYearCalculationText.setVisibility(TextView.VISIBLE);
-                                Double twentyYearReturn = returnsIfInvested(amount, returnForShortTerm, 20.0, 0);
-                                String twentyYearReturnString = formatter.format(twentyYearReturn);
-                                twentyYearCalculationText.setText(twentyYearReturnString + " in 20 years");
+                                    twentyYearCalculationText.startAnimation(in);
+                                    twentyYearCalculationText.setVisibility(TextView.VISIBLE);
+                                    Double twentyYearReturn = returnsIfInvested(amount, returnForShortTerm, 20.0, 0);
+                                    String twentyYearReturnString = formatter.format(twentyYearReturn);
+                                    twentyYearCalculationText.setText(twentyYearReturnString + " in 20 years");
 
-                                thirtyYearCalculationText.startAnimation(in);
-                                thirtyYearCalculationText.setVisibility(TextView.VISIBLE);
-                                Double thirtyYearReturn = returnsIfInvested(amount, returnForShortTerm, 30.0, 0);
-                                String thirtyYearReturnString = formatter.format(thirtyYearReturn);
-                                thirtyYearCalculationText.setText(thirtyYearReturnString + " in 30 years");
+                                    thirtyYearCalculationText.startAnimation(in);
+                                    thirtyYearCalculationText.setVisibility(TextView.VISIBLE);
+                                    Double thirtyYearReturn = returnsIfInvested(amount, returnForShortTerm, 30.0, 0);
+                                    String thirtyYearReturnString = formatter.format(thirtyYearReturn);
+                                    thirtyYearCalculationText.setText(thirtyYearReturnString + " in 30 years");
+
+
                             }
                             else if (spinner.getSelectedItemPosition() == 1)
                             {
@@ -199,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     }
 
 
+
     public void openSettings(View view)
     {
         Intent intent = new Intent(this, SettingsScreenActivity.class);
@@ -232,6 +313,8 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
     // calculations
     public double returnsIfInvested(Double amount, Double rate, Double years, Integer dollar)
     {
+
+        if (onceOrMonth == 0) {
         if (dollar == 0)
         {
             return amount*Math.pow(1 + rate - inflation,years);
@@ -239,9 +322,17 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         else
         {
             return amount*Math.pow(1 + rate,years);
-         }
+        }
+        } else { //onceOrMonth == 1
+        if (dollar == 0) {
+            return (12*amount)*(Math.pow(1 + (rate - inflation),years) - 1) / (rate - inflation);
+        } else {
+            return (12*amount)*(Math.pow(1 + (rate),years) - 1) / (rate);
+        }
 
-    }
+
+
+    } }
 
     //to check for empty text
     private boolean isEmpty(EditText etText) {

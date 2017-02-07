@@ -1,5 +1,6 @@
 package com.davidwang.dontspend;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,12 +33,10 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
     EditText spendAmountEdit;
     TextView summaryText;
     TextView yearsUntilRetirementText;
+    Button retirementInfoButton;
 
     Double inflation = 0.0329;
     Double returnForSP500 = 0.0950;
-    Double returnForShortTerm = 0.0345;
-    Double returnForLongTerm = 0.0496;
-    Double newYearsForRetirement = 0.0;
     Double yearsUntilRetirementDouble = 0.0;
 
     Double yearsUntilRetirementDifference = 0.0;
@@ -45,6 +45,9 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retirement);
+
+        //startActivity(intent);
+
 
         calculateButton = (Button) findViewById(R.id.calculateButton);
         networthEdit = (EditText) findViewById(R.id.currentNetWorthText);
@@ -56,11 +59,16 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
 
         initToolbar();
 
+        retirementInfoButton = (Button) findViewById(R.id.retirementInfoButton);
+
+        networthEdit.requestFocus();
+
+
         yearsUntilRetirementText.setText(" ");
         summaryText.setText(" ");
 
         // spinner element
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+        /*final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
         spinner.setOnItemSelectedListener((OnItemSelectedListener) this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.investments_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,7 +78,22 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
         spinner2.setOnItemSelectedListener((OnItemSelectedListener) this);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.frequency_array, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(adapter2);
+        spinner2.setAdapter(adapter2);*/
+
+        final Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+
+        // Initializing a String Array
+        String[] investments_array = new String[]{
+                "Once",
+                "Per Month"
+        };
+
+        // Initializing an ArrayAdapter
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                this,R.layout.spinner_item,investments_array
+        );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner2.setAdapter(spinnerArrayAdapter);
 
         // alert code
         final AlertDialog alertDialog = new AlertDialog.Builder(retirementActivity.this).create();
@@ -91,7 +114,33 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
                         if (isEmpty(networthEdit.getText()) || Double.parseDouble(networthEdit.getText().toString()) > 9000000.0 || isEmpty(amountSavedPerYearEdit.getText()) || Double.parseDouble(amountSavedPerYearEdit.getText().toString()) > 9000000.0 || isEmpty(targetRetirementAmountEdit.getText())|| Double.parseDouble(targetRetirementAmountEdit.getText().toString()) > 9000000.0 || isEmpty(spendAmountEdit.getText()) || Double.parseDouble(spendAmountEdit.getText().toString()) > 9000000.0) {
                             //System.out.println("This is empty");
                             alertDialog.show();
-                        } else {
+                            return;
+                        } else if (isEmpty(spendAmountEdit.getText())) {
+
+                            Double networthDouble = Double.parseDouble(networthEdit.getText().toString());
+                            Double amountSavedPerYearDouble = Double.parseDouble(amountSavedPerYearEdit.getText().toString());
+                            Double targetRetirementAmountDouble = Double.parseDouble(targetRetirementAmountEdit.getText().toString());
+
+                            Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble, returnForSP500, targetRetirementAmountDouble, 12.0*(amountSavedPerYearDouble));
+
+                        yearsUntilRetirementText.setText(String.format("%.2f", newYearsUntilRetirement));
+
+
+
+
+
+                        }
+
+                        else
+
+                        {
+                            //hide keyboard
+
+                            InputMethodManager inputManager = (InputMethodManager)
+                                    getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                            inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
                             // currency formatter
                             NumberFormat formatter = NumberFormat.getCurrencyInstance();
                             Double networthDouble = Double.parseDouble(networthEdit.getText().toString());
@@ -99,55 +148,23 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
                             Double targetRetirementAmountDouble = Double.parseDouble(targetRetirementAmountEdit.getText().toString());
                             Double spendAmountDouble = Double.parseDouble(spendAmountEdit.getText().toString());
 
-                            if (spinner.getSelectedItemPosition() == 0) {
-                                yearsUntilRetirementDouble = yearsUntilRetirementFunc(networthDouble, returnForShortTerm, targetRetirementAmountDouble, amountSavedPerYearDouble);
+                            yearsUntilRetirementDouble = yearsUntilRetirementFunc(networthDouble, returnForSP500, targetRetirementAmountDouble, 12.0*amountSavedPerYearDouble);
 
-                                if (spinner2.getSelectedItemPosition() == 0) { //once
+                            if (spinner2.getSelectedItemPosition() == 0) { //once
 
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble + spendAmountDouble, returnForShortTerm, targetRetirementAmountDouble, amountSavedPerYearDouble);
+                                Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble + spendAmountDouble, returnForSP500, targetRetirementAmountDouble, 12.0*amountSavedPerYearDouble);
+                                yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
+
+                            } else { //per month
+                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble, returnForSP500, targetRetirementAmountDouble, 12.0*(amountSavedPerYearDouble + spendAmountDouble));
                                     yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                } else {
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble, returnForShortTerm, targetRetirementAmountDouble, amountSavedPerYearDouble + spendAmountDouble);
-                                    yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                }
-
-                            } else if (spinner.getSelectedItemPosition() == 1) {
-                                yearsUntilRetirementDouble = yearsUntilRetirementFunc(networthDouble, returnForLongTerm, targetRetirementAmountDouble, amountSavedPerYearDouble);
-
-                                if (spinner2.getSelectedItemPosition() == 0) { //once
-
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble + spendAmountDouble, returnForLongTerm, targetRetirementAmountDouble, amountSavedPerYearDouble);
-                                    yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                } else {
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble, returnForLongTerm, targetRetirementAmountDouble, amountSavedPerYearDouble + spendAmountDouble);
-                                    yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                }
-
-                            } else if (spinner.getSelectedItemPosition() == 2) {
-
-                                yearsUntilRetirementDouble = yearsUntilRetirementFunc(networthDouble, returnForSP500, targetRetirementAmountDouble, amountSavedPerYearDouble);
-
-                                if (spinner2.getSelectedItemPosition() == 0) { //once
-
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble + spendAmountDouble, returnForSP500, targetRetirementAmountDouble, amountSavedPerYearDouble);
-                                    yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                } else {
-                                    Double newYearsUntilRetirement = yearsUntilRetirementFunc(networthDouble, returnForSP500, targetRetirementAmountDouble, amountSavedPerYearDouble + spendAmountDouble);
-                                    yearsUntilRetirementDifference = yearsUntilRetirementDouble - newYearsUntilRetirement;
-
-                                }
                             }
 
                             yearsUntilRetirementText.setText(String.format("%.2f", yearsUntilRetirementDouble));
 
 
                             summaryText.setText("If you saved $" + spendAmountDouble.toString() + " instead of spending it, you would be able to retire " + String.format("%.2f", yearsUntilRetirementDifference) + " years earlier!");
-
+                            return;
 
 
                         }
@@ -184,6 +201,17 @@ public class retirementActivity extends AppCompatActivity implements OnItemSelec
         // next line will instead of opening new activity bring the one to front
         intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
+    }
+
+    public void openMoreInfo(View view)
+    {
+        System.out.println("in open more info");
+        Intent intent = new Intent(this, RetirementInformationPageActivity.class);
+        // next line will instead of opening new activity bring the one to front
+        intent .setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+
+
     }
 
     public void openMain()

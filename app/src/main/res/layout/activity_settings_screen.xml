@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/lightGrey"
         android:id="@+id/textView" />
 
     <TextView
@@ -53,75 +54,13 @@
         android:id="@+id/githubButton" />
 
     <TextView
-        android:text="Dollar Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView10"
-        android:layout_alignLeft="@+id/textView8"
-        android:layout_alignStart="@+id/textView8"
-        android:layout_marginTop="18dp"
-        android:id="@+id/textView11"
-        android:layout_alignEnd="@+id/textView10" />
-
-    <Button
-        android:text="Change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/changeButton"
-        android:layout_marginTop="22dp"
-        android:layout_below="@+id/dollarValueSwitch"
-        android:layout_alignLeft="@+id/dollarValueSwitch"
-        android:textColor="@color/lightRed"
-        android:layout_alignStart="@+id/dollarValueSwitch" />
-
-    <TextView
         android:text="Visit me at www.DavidWangDW.com"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/lightGrey"
         android:id="@+id/websiteText" />
-
-    <Button
-        android:text="Reset to Default"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/resetDefaultButton"
-        android:layout_alignBaseline="@+id/changeButton"
-        android:layout_alignBottom="@+id/changeButton"
-        android:layout_alignRight="@+id/textView8"
-        android:textColor="@color/lightRed"
-        android:layout_alignEnd="@+id/textView8" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="4"
-        android:id="@+id/SP500Rate"
-        android:layout_alignStart="@+id/longTermRateField"
-        android:layout_alignTop="@+id/textView10"
-        android:layout_above="@+id/textView11" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="4"
-        android:id="@+id/longTermRateField"
-        android:layout_alignBottom="@+id/textView9"
-        android:layout_alignStart="@+id/shortTermRateField"
-        android:layout_alignTop="@+id/textView9" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="4"
-        android:id="@+id/shortTermRateField"
-        android:layout_alignTop="@+id/textView8"
-        android:layout_alignStart="@+id/inflationRateField"
-        android:layout_alignBottom="@+id/textView8" />
 
     <TextView
         android:text="Short Term Rate"
@@ -143,26 +82,6 @@
         android:textColor="@color/lightGrey"
         android:layout_alignStart="@+id/textView8" />
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dollarValueSwitch"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:layout_alignBaseline="@+id/textView11"
-        android:layout_alignBottom="@+id/textView11"
-        android:layout_alignEnd="@+id/websiteText"
-        android:layout_marginEnd="12dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="4"
-        android:id="@+id/inflationRateField"
-        android:layout_alignTop="@+id/textView7"
-        android:layout_alignEnd="@+id/githubButton"
-        android:layout_above="@+id/textView8" />
-
     <TextView
         android:text="Inflation Rate"
         android:layout_width="wrap_content"
@@ -182,5 +101,90 @@
         android:layout_below="@+id/textView9"
         android:textColor="@color/lightGrey"
         android:layout_alignStart="@+id/textView9" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="4"
+        android:gravity="center"
+        android:textColor="@color/lightGrey"
+        android:id="@+id/shortTermRateField"
+        android:layout_below="@+id/inflationRateField"
+        android:layout_alignStart="@+id/inflationRateField" />
+
+    <Button
+        android:text="Defaults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resetDefaultButton"
+        android:textColor="@color/lightRed"
+        android:layout_alignBaseline="@+id/changeButton"
+        android:layout_alignBottom="@+id/changeButton"
+        android:layout_alignStart="@+id/textView11" />
+
+    <Button
+        android:text="Change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/changeButton"
+        android:layout_marginTop="22dp"
+        android:textColor="@color/lightRed"
+        android:layout_below="@+id/dollarValueSpinner"
+        android:layout_alignStart="@+id/dollarValueSpinner" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="4"
+        android:id="@+id/longTermRateField"
+        android:textColor="@color/lightGrey"
+        android:gravity="center"
+        android:layout_below="@+id/shortTermRateField"
+        android:layout_alignStart="@+id/shortTermRateField" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="4"
+        android:id="@+id/inflationRateField"
+        android:textColor="@color/lightGrey"
+        android:layout_above="@+id/textView8"
+        android:gravity="center"
+        android:layout_alignEnd="@+id/githubButton" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal"
+        android:ems="4"
+        android:id="@+id/SP500Rate"
+        android:gravity="center"
+        android:textColor="@color/lightGrey"
+        android:layout_below="@+id/longTermRateField"
+        android:layout_alignStart="@+id/longTermRateField" />
+
+    <TextView
+        android:text="Dollar Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:id="@+id/textView11"
+        android:textColor="@color/lightGrey"
+        android:layout_below="@+id/SP500Rate"
+        android:layout_alignStart="@+id/textView10" />
+
+    <Spinner
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/dollarValueSpinner"
+        android:textColor="@color/lightGrey"
+        android:gravity="center"
+        android:layout_alignBaseline="@id/textView11"
+        android:popupBackground="@color/darkGrey"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/textView8" />
 
 </RelativeLayout>

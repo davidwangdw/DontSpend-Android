@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DontSpend</string>
+    <string name="app_name">Don\'t Spend</string>
     <string-array name="investments_array">
         <item>Short Term (3 Month T. Bill)</item>
         <item>Long Term (10 Year T. Bond)</item>

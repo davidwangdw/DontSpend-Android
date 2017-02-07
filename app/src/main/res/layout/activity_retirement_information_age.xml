@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_retirement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/darkGrey"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.davidwang.dontspend.retirementActivity">
+
+    <TextView
+        android:text="To find the amount of assets you need to retire early, take your current yearly expenses, and multiply that by 25. The idea behind this is the Safe Withdrawl Rate (SWR), based on the Trinity Study. The study found that in the vast majority of cases, if you invest in a good allocation of stocks and bonds, and only withdraw 4% of your funds every year, the principal should never run out."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView12"
+        android:gravity = "center"
+        android:textColor="@color/lightGrey"
+        android:layout_weight="0.33"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="81dp" />
+
+    <TextView
+        android:text="Monthly Expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="87dp"
+        android:id="@+id/textView17"
+        android:layout_centerVertical="true"
+        android:textColor="@color/lightGrey"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Retirement Amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView19"
+        android:gravity="center"
+        android:textColor="@color/lightGrey"
+        android:layout_below="@+id/textView17"
+        android:layout_alignStart="@+id/textView17" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:gravity="center"
+        android:textColor="@color/lightGrey"
+        android:id="@+id/monthlyExpensesEdit"
+        android:layout_above="@+id/retirementAmountText"
+        android:layout_alignEnd="@+id/textView12"
+        android:layout_toEndOf="@+id/calculateButton" />
+
+    <Button
+        android:text="Calculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/lightRed"
+        android:layout_marginTop="53dp"
+        android:id="@+id/calculateButton" />
+
+    <TextView
+        android:text="$12,000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/retirementAmountText"
+        android:textColor="@color/lightGrey"
+        android:gravity="center"
+        android:layout_above="@+id/calculateButton"
+        android:layout_alignEnd="@+id/textView12"
+        android:layout_alignStart="@+id/monthlyExpensesEdit" />
+</RelativeLayout>
