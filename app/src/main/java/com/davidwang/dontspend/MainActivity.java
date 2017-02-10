@@ -3,6 +3,7 @@ package com.davidwang.dontspend;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.audiofx.BassBoost;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -71,13 +72,6 @@ public class MainActivity extends AppCompatActivity implements OnItemSelectedLis
         initToolbar();
 
         // spinner element
-
-        /*final Spinner spinner = (Spinner) findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.investments_array, android.R.layout.simple_spinner_item);
-        //ArrayAdapter<String> adapter= new ArrayAdapter<String>(this, R.layout.spinner_item, R.array.investments_array);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(adapter);*/
 
         //confusing, change later
         final Spinner spinner = (Spinner) findViewById(R.id.spinner1);

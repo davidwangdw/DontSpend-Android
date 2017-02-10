@@ -68,7 +68,7 @@ public class RetirementInformationPageActivity extends AppCompatActivity{
                             NumberFormat formatter = NumberFormat.getCurrencyInstance();
                             Double networthDouble = Double.parseDouble(monthlyExpensesEdit.getText().toString());
 
-                            Double retirementAmount = networthDouble * 4.0;
+                            Double retirementAmount = networthDouble * 12.0 * 25.0;
 
                             String retirementAmountString = formatter.format(retirementAmount);
                             summaryText.setText(retirementAmountString);
